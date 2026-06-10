@@ -1,0 +1,59 @@
+﻿ResNet50 三分类实现过程与结果说明
+============================================================
+
+一、实现目标
+本方法使用 ResNet50 迁移学习完成 cloudy、sandstorm、sunny 三类彩色天气图像分类。
+相对于从零开始训练的普通 CNN，ResNet50 利用了 ImageNet 预训练参数，能够更高效地学习稳定的图像表示。
+
+二、实现流程
+1. 读取 data/train、data/val、data/test 三个数据划分。
+2. 使用 ResNet50 专用的 preprocess_input 进行输入预处理。
+3. 第一阶段冻结 ResNet50 主干，仅训练新接入的分类头。
+4. 第二阶段解冻高层网络，进行小学习率微调。
+5. 使用验证集最优模型在测试集上输出最终评估结果。
+
+三、模型结构说明
+1. 输入尺寸为 224×224×3。
+2. 主干网络使用 ImageNet 预训练的 ResNet50，include_top=False。
+3. 分类头由 GlobalAveragePooling2D + Dense(256, relu) + Dropout(0.5) + Dense(3, softmax) 组成。
+4. 第一阶段冻结主干网络，第二阶段只解冻最后约 30 层进行微调。
+
+四、训练策略说明
+1. 训练集采用旋转、平移、剪切、缩放和水平翻转等数据增强。
+2. 第一阶段学习率为 1e-3，第二阶段微调学习率为 1e-5。
+3. 使用 ModelCheckpoint 保存验证集最优模型。
+4. 使用 EarlyStopping 防止过拟合，使用 ReduceLROnPlateau 自动调节学习率。
+5. 对 sandstorm 类别设置更高类别权重，以提升其识别稳定性。
+
+五、数据规模
+训练集样本数：9472
+验证集样本数：1260
+测试集样本数：1256
+train 细分：cloudy=4080, sandstorm=1276, sunny=4116
+val 细分：cloudy=510, sandstorm=236, sunny=514
+test 细分：cloudy=510, sandstorm=231, sunny=515
+
+六、结果说明
+1. 最终测试损失值：0.135164
+2. 最终测试准确率：0.947452
+3. 训练过程中最高验证集准确率：0.926190
+4. 训练历史共记录到第 19 个 epoch。
+5. 该结果说明迁移学习模型在当前三分类任务上具有较高的泛化能力。
+
+七、各类别表现
+cloudy: precision=0.9500, recall=0.9200, f1-score=0.9400, support=510
+sandstorm: precision=0.9700, recall=1.0000, f1-score=0.9900, support=231
+sunny: precision=0.9300, recall=0.9500, f1-score=0.9400, support=515
+
+八、结果文件说明
+1. classification_report.txt：ResNet50 测试集分类报告。
+2. evaluation_metrics.txt：ResNet50 总体指标摘要。
+3. confusion_matrix.png / confusion_matrix.csv：ResNet50 混淆矩阵图与表。
+4. learning_curves.png：两阶段训练的准确率和损失曲线。
+5. training_history.csv：逐 epoch 的训练/验证指标记录。
+6. best_resnet50_sandstorm_model.keras：验证集最优模型。
+7. optimized_sandstorm_resnet50_model.h5：最终导出的 ResNet50 模型文件。
+
+九、方法特点说明
+ResNet50 借助预训练特征和残差结构，在中小规模数据集上通常比普通 CNN 更稳定，收敛更快、精度更高。
+但其模型体量更大，对显存、训练时间和部署资源的要求也更高。

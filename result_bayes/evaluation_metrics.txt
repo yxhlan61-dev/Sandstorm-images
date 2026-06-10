@@ -1,0 +1,14 @@
+﻿Bayes Evaluation Metrics
+==================================================
+Feature Dimension Before PCA: 40
+Selected PCA Components: 32
+Explained Variance After PCA: 0.999850
+Validation Accuracy (Best Search Result): 0.684127
+Validation Accuracy Without PCA: 0.576984
+Test Accuracy: 0.710191
+Test Accuracy Without PCA: 0.654459
+Accuracy Gain From PCA: 0.055732
+Train Samples: 9472
+Validation Samples: 1260
+Test Samples: 1256
+Classes: ['cloudy', 'sandstorm', 'sunny']

@@ -1,0 +1,11 @@
+﻿Bayes Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+      cloudy     0.6227    0.8706    0.7261       510
+   sandstorm     0.7717    0.6147    0.6843       231
+       sunny     0.8524    0.5942    0.7002       515
+
+    accuracy                         0.7102      1256
+   macro avg     0.7489    0.6932    0.7035      1256
+weighted avg     0.7443    0.7102    0.7078      1256

@@ -1,0 +1,8 @@
+﻿CNN Evaluation Metrics
+==================================================
+Test Loss: 0.520113
+Test Accuracy: 0.898885
+Train Samples: 9472
+Validation Samples: 1260
+Test Samples: 1256
+Classes: ['cloudy', 'sandstorm', 'sunny']

@@ -1,0 +1,59 @@
+﻿CNN 三分类实现过程与结果说明
+============================================================
+
+一、实现目标
+本方法使用卷积神经网络完成 cloudy、sandstorm、sunny 三类彩色天气图像分类。
+相对于传统人工特征方法，CNN 通过端到端训练自动学习图像的边缘、纹理、形状和高级语义特征。
+
+二、实现流程
+1. 使用 data/train、data/val、data/test 三个数据划分。
+2. 对训练集进行数据增强，对验证集和测试集仅做归一化。
+3. 构建多层卷积神经网络并训练。
+4. 在测试集上输出分类报告、混淆矩阵和样本可视化结果。
+
+三、模型结构说明
+1. 输入尺寸为 150×150×3。
+2. 主体由 4 个卷积块组成，每个卷积块包含 Conv2D + BatchNormalization + MaxPooling。
+3. 卷积通道数依次为 32、64、128、256。
+4. 特征图展平后接 512 维全连接层，并使用 Dropout(0.6) 抑制过拟合。
+5. 输出层使用 softmax 完成三分类。
+
+四、训练策略说明
+1. 训练集采用旋转、平移、剪切、缩放、水平翻转等数据增强。
+2. 优化器采用 Adam，学习率为 0.0005。
+3. 损失函数为 categorical_crossentropy，评价指标为 accuracy。
+4. 为了减少漏判 sandstorm，对 sandstorm 类设置了更高的类别权重。
+5. 使用 EarlyStopping，根据验证集 loss 自动提前停止训练。
+
+五、数据规模
+训练集样本数：9472
+验证集样本数：1260
+测试集样本数：1256
+train 细分：cloudy=4080, sandstorm=1276, sunny=4116
+val 细分：cloudy=510, sandstorm=236, sunny=514
+test 细分：cloudy=510, sandstorm=231, sunny=515
+
+六、结果说明
+1. 测试集损失值：0.520113
+2. 测试集准确率：0.898885
+3. 该准确率表示测试集中被正确分类的样本占总样本的比例。
+4. CNN 通过自动学习图像特征，相比传统手工特征方法通常具备更强的表达能力。
+
+七、各类别表现
+cloudy: precision=0.8767, recall=0.8922, f1-score=0.8844, support=510
+sandstorm: precision=0.9143, recall=0.9697, f1-score=0.9412, support=231
+sunny: precision=0.9146, recall=0.8738, f1-score=0.8937, support=515
+
+八、结果文件说明
+1. classification_report.txt：CNN 测试集分类报告。
+2. evaluation_metrics.txt：CNN 总体指标摘要。
+3. confusion_matrix.png / confusion_matrix.csv：CNN 混淆矩阵图与表。
+4. evaluation_metrics_detailed.png：CNN 各类别指标柱状图。
+5. 准确率与损失值变化图.png、学习曲线改进版.png：训练过程曲线图。
+6. 神经网络结构图.png：网络结构可视化结果。
+7. 拼接图.png 与若干单张图片：测试样本预测可视化结果。
+8. optimized_sandstorm_model.h5：训练完成后的 CNN 模型文件。
+
+九、方法特点说明
+CNN 能直接从像素中学习判别特征，结构清晰、训练逻辑直观，适合作为基础深度学习方法进行对比实验。
+但其性能较大程度上依赖网络结构设计、数据增强质量和训练策略设置。

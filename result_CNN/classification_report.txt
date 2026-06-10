@@ -1,0 +1,11 @@
+﻿CNN Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+      cloudy     0.8767    0.8922    0.8844       510
+   sandstorm     0.9143    0.9697    0.9412       231
+       sunny     0.9146    0.8738    0.8937       515
+
+    accuracy                         0.8989      1256
+   macro avg     0.9019    0.9119    0.9064      1256
+weighted avg     0.8992    0.8989    0.8987      1256

@@ -19,3 +19,6 @@ data/test.zip
 
 result_resnet/*.keras
 result_resnet/*.h5
+result_CNN/*.h5
+result_bayes/*.joblib
+result_bayes/*cache*.npz
