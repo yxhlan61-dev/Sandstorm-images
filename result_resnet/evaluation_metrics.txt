@@ -1,0 +1,6 @@
+﻿ResNet50 Evaluation Metrics
+==================================================
+Test Loss: 0.135164
+Test Accuracy: 0.947452
+Classes: ['cloudy', 'sandstorm', 'sunny']
+Class Indices: {'cloudy': 0, 'sandstorm': 1, 'sunny': 2}

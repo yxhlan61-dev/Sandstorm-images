@@ -1,0 +1,11 @@
+﻿ResNet50 Classification Report
+==================================================
+              precision    recall  f1-score   support
+
+      cloudy       0.95      0.92      0.94       510
+   sandstorm       0.97      1.00      0.99       231
+       sunny       0.93      0.95      0.94       515
+
+    accuracy                           0.95      1256
+   macro avg       0.95      0.96      0.95      1256
+weighted avg       0.95      0.95      0.95      1256

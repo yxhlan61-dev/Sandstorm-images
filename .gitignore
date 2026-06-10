@@ -16,3 +16,6 @@ Thumbs.db
 data/train/
 data/val/
 data/test.zip
+
+result_resnet/*.keras
+result_resnet/*.h5
